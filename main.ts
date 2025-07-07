@@ -9,7 +9,9 @@ let stack: number[] = []
 
 // general purpose registers v0-vf
 let v: number[] = [];
-
+for (let j = 0; j < 16; j++) {
+    v[j] = 0
+}
 
 // 4096 bytes (4kb) of memory
 let memory: number[] = [];
@@ -46,23 +48,35 @@ for (let j = 0; j < fontBytes.length; j++) {
 }
 
 const data: number[] = [
-	// Offset 0x00000000 to 0x00000083
-	0x00, 0xE0, 0xA2, 0x2A, 0x60, 0x0C, 0x61, 0x08, 0xD0, 0x1F, 0x70, 0x09,
-	0xA2, 0x39, 0xD0, 0x1F, 0xA2, 0x48, 0x70, 0x08, 0xD0, 0x1F, 0x70, 0x04,
-	0xA2, 0x57, 0xD0, 0x1F, 0x70, 0x08, 0xA2, 0x66, 0xD0, 0x1F, 0x70, 0x08,
-	0xA2, 0x75, 0xD0, 0x1F, 0x12, 0x28, 0xFF, 0x00, 0xFF, 0x00, 0x3C, 0x00,
-	0x3C, 0x00, 0x3C, 0x00, 0x3C, 0x00, 0xFF, 0x00, 0xFF, 0xFF, 0x00, 0xFF,
-	0x00, 0x38, 0x00, 0x3F, 0x00, 0x3F, 0x00, 0x38, 0x00, 0xFF, 0x00, 0xFF,
-	0x80, 0x00, 0xE0, 0x00, 0xE0, 0x00, 0x80, 0x00, 0x80, 0x00, 0xE0, 0x00,
-	0xE0, 0x00, 0x80, 0xF8, 0x00, 0xFC, 0x00, 0x3E, 0x00, 0x3F, 0x00, 0x3B,
-	0x00, 0x39, 0x00, 0xF8, 0x00, 0xF8, 0x03, 0x00, 0x07, 0x00, 0x0F, 0x00,
-	0xBF, 0x00, 0xFB, 0x00, 0xF3, 0x00, 0xE3, 0x00, 0x43, 0xE0, 0x00, 0xE0,
-	0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0xE0, 0x00, 0xE0
+	// Offset 0x00000000 to 0x00000103
+	0x00, 0xE0, 0x61, 0x01, 0x60, 0x08, 0xA2, 0x50, 0xD0, 0x1F, 0x60, 0x10,
+	0xA2, 0x5F, 0xD0, 0x1F, 0x60, 0x18, 0xA2, 0x6E, 0xD0, 0x1F, 0x60, 0x20,
+	0xA2, 0x7D, 0xD0, 0x1F, 0x60, 0x28, 0xA2, 0x8C, 0xD0, 0x1F, 0x60, 0x30,
+	0xA2, 0x9B, 0xD0, 0x1F, 0x61, 0x10, 0x60, 0x08, 0xA2, 0xAA, 0xD0, 0x1F,
+	0x60, 0x10, 0xA2, 0xB9, 0xD0, 0x1F, 0x60, 0x18, 0xA2, 0xC8, 0xD0, 0x1F,
+	0x60, 0x20, 0xA2, 0xD7, 0xD0, 0x1F, 0x60, 0x28, 0xA2, 0xE6, 0xD0, 0x1F,
+	0x60, 0x30, 0xA2, 0xF5, 0xD0, 0x1F, 0x12, 0x4E, 0x0F, 0x02, 0x02, 0x02,
+	0x02, 0x02, 0x00, 0x00, 0x1F, 0x3F, 0x71, 0xE0, 0xE5, 0xE0, 0xE8, 0xA0,
+	0x0D, 0x2A, 0x28, 0x28, 0x28, 0x00, 0x00, 0x18, 0xB8, 0xB8, 0x38, 0x38,
+	0x3F, 0xBF, 0x00, 0x19, 0xA5, 0xBD, 0xA1, 0x9D, 0x00, 0x00, 0x0C, 0x1D,
+	0x1D, 0x01, 0x0D, 0x1D, 0x9D, 0x01, 0xC7, 0x29, 0x29, 0x29, 0x27, 0x00,
+	0x00, 0xF8, 0xFC, 0xCE, 0xC6, 0xC6, 0xC6, 0xC6, 0x00, 0x49, 0x4A, 0x49,
+	0x48, 0x3B, 0x00, 0x00, 0x00, 0x01, 0x03, 0x03, 0x03, 0x01, 0xF0, 0x30,
+	0x90, 0x00, 0x00, 0x80, 0x00, 0x00, 0x00, 0xFE, 0xC7, 0x83, 0x83, 0x83,
+	0xC6, 0xFC, 0xE7, 0xE0, 0xE0, 0xE0, 0xE0, 0x71, 0x3F, 0x1F, 0x00, 0x00,
+	0x07, 0x02, 0x02, 0x02, 0x02, 0x39, 0x38, 0x38, 0x38, 0x38, 0xB8, 0xB8,
+	0x38, 0x00, 0x00, 0x31, 0x4A, 0x79, 0x40, 0x3B, 0xDD, 0xDD, 0xDD, 0xDD,
+	0xDD, 0xDD, 0xDD, 0xDD, 0x00, 0x00, 0xA0, 0x38, 0x20, 0xA0, 0x18, 0xCE,
+	0xFC, 0xF8, 0xC0, 0xD4, 0xDC, 0xC4, 0xC5, 0x00, 0x00, 0x30, 0x44, 0x24,
+	0x14, 0x63, 0xF1, 0x03, 0x07, 0x07, 0x77, 0x17, 0x63, 0x71, 0x00, 0x00,
+	0x28, 0x8E, 0xA8, 0xA8, 0xA6, 0xCE, 0x87, 0x03, 0x03, 0x03, 0x87, 0xFE,
+	0xFC, 0x00, 0x00, 0x60, 0x90, 0xF0, 0x80, 0x70
 ];
 
+const programOffset = 0x200;
 // load the data into memory
 for (let j = 0; j < data.length; j++) {
-    memory[j] = data[j];
+    memory[programOffset + j] = data[j];
 }
 
 // timer registers
@@ -85,18 +99,19 @@ timer.background(function() {
 
 // set the screen image to a blank image
 let screenImage = image.create(64, 32);
-screenImage.fillRect(0, 0, 64, 32, 0);
+screenImage.fillRect(0, 0, 64, 32, 15);
 
-game.onUpdate(function() {
+
+forever(function() {
     scene.setBackgroundImage(screenImage);
-})
 
+})
 // main loop
 timer.background(function() {
     while (true) {
         // fetch
         let currentIntructionA = memory[pc];
-        let currentInstructionB = memory[pc+1];
+        let currentInstructionB = memory[pc + 1];
         let currentInstruction = currentIntructionA << 8 | currentInstructionB;
 
         pc += 2
@@ -106,7 +121,7 @@ timer.background(function() {
         let opcode = (currentInstruction >> 12) & 0xF;
         let n2 = (currentInstruction >> 8) & 0xF;
         let n3 = (currentInstruction >> 4) & 0xF;
-        let n4 = currentInstruction &0xf;
+        let n4 = currentInstruction & 0xf;
 
         let x = n2;
         let y = n3;
@@ -116,71 +131,126 @@ timer.background(function() {
         // execute
 
         switch (opcode) {
-            case 0x0 :
+            case 0x0:
                 if (currentInstruction === 0x00E0) {
                     // clear screen
-                    screenImage.fillRect(0, 0, 64, 32, 0);
+                    screenImage.fillRect(0, 0, 64, 32, 15);
+                    pause(1)
+                } else if (currentInstruction == 0x00EE) {
+                    // return from subroutine
+                    // set pc to pop from stack
+                    pc = stack.pop();
                 }
                 break;
-            case 0x1 :
+            case 0x1:
                 // jump to nnn
                 pc = nnn;
                 break;
-            case 0x6 :
+            case 0x6:
                 // set vx to nn
                 v[x] = nn;
                 break;
-            case 0x7 :
+            case 0x7:
                 // add nn to vx
                 v[x] = v[x] + nn
                 break;
-            case 0xA :
+            case 0xA:
                 // set index register to nnn
                 i = nnn;
                 break;
-            case 0xD :
-                // draw to the screen at vx, vy with value n
+            case 0xD:
+                // draw to the screen at vx, vy with value n pixel tall sprite
                 let xCoord = v[x] & 63;
                 let yCoord = v[y] & 31;
-                v[0xF] = 0;
+                // set vf to 0
+                v[0xf] = 0;
+
+                // for n rows
                 for (let row = 0; row < n; row++) {
-                    // Get the byte of sprite data for the current row from memory[I + row]
-                    let spriteDataByte = memory[i + row];
-
-                    // Calculate the actual Y coordinate for this row, with wrapping
-                    // This is the *current* Y position for drawing
-                    let currentY = (xCoord + row) % 32; // Wrap around the 32-pixel height
-
-                    // Loop through each bit (pixel) in the current sprite data byte (8 bits wide)
-                    for (let bitPosition = 0; bitPosition < 8; bitPosition++) {
-                        // Calculate the actual X coordinate for this pixel, with wrapping
-                        // This is the *current* X position for drawing
-                        let currentX = (yCoord + bitPosition) % 64; // Wrap around the 64-pixel width
-
-                        // Get the value of the current bit (0 or 1)
-                        // We read bits from left to right (most significant bit first)
-                        const spritePixelIsSet = (spriteDataByte >> (7 - bitPosition)) & 1;
-
-                        // Get the current pixel state on the display
-                        const screenPixelIsSet = screenImage.getPixel(currentX, currentY); // Assuming 0 for off, 1 for on
-
-                        // Chip-8 uses XOR drawing:
-                        // If the sprite pixel is 1:
-                        if (spritePixelIsSet) {
-                            // If the screen pixel is also 1 (collision), turn it off
-                            if (screenPixelIsSet) {
-                                screenImage.setPixel(currentX, currentY, 0); // Turn pixel OFF
-                                v[0xF] = 1; // Set collision flag
-                            } else {
-                                // If the screen pixel is 0, turn it on
-                                screenImage.setPixel(currentX, currentY, 1); // Turn pixel ON
-                            }
+                    if (yCoord + row >= 32) {
+                        break
+                    }
+                    let spriteByte = memory[i + row]
+                    for (let bit = 0; bit < 8; bit++) {
+                        if (xCoord + bit >= 64) {
+                            break
                         }
-                        // If spritePixelIsSet is 0, do nothing (pixel remains as it is)
+                        let spritePixel = (spriteByte >> (7 - bit)) & 1
+                        if (spritePixel == 1) {
+                            if (screenImage.getPixel(xCoord + bit, yCoord + row) == 1) {
+                                screenImage.setPixel(xCoord + bit, yCoord + row, 15)
+                                v[0xf] = 1
+                            } else {
+                                screenImage.setPixel(xCoord + bit, yCoord + row, 1)
+                            }
+                            pause(1)
+                        }
                     }
                 }
 
-            break;
-        }
+                break;
+            case 0x2:
+                // subroutine
+                // add pc to stack then set pc to nnn
+                stack.push(pc);
+                pc = nnn;
+                break;
+            case 0x3:
+                // skip conditionally
+                // skip 1 instruction if vx == nn
+                if (v[x] == nn) {
+                    pc += 2;
+                }
+                break;
+            case 0x4:
+                // skip conditionally
+                // skip 1 instruction if vx != nn
+                if (v[x] != nn) {
+                    pc += 2;
+                }
+                break;
+            case 0x5:
+                // skip conditionally
+                // skip 1 instruction if vx == vy
+                if (v[x] == v[y]) {
+                    pc += 2;
+                }
+                break;
+            case 0x9:
+                // skip conditionally
+                // skip 1 instruction if vx != vy
+                if (v[x] != v[y]) {
+                    pc += 2;
+                }
+                break;
+            case 0x8:
+                if (n4 == 0x0) {
+                    // set vx to vy
+                    v[x] = v[y]
+                } else if (n4 == 0x1) {
+                    // binary or
+                    // set vx to the OR of vx and vy
+                    v[x] = v[x] | v[y]
+                } else if (n4 == 0x2) {
+                    // binary and
+                    // set vx to the AND of vx and vy
+                    v[x] = v[x] & v[y]
+                } else if (n4 == 0x3) {
+                    // binary xor
+                    // set vx to the XOR of vx and vy
+                    v[x] = v[x] ^ v[y]
+                } else if (n4 == 0x4) {
+                    // add
+                    // set vx to vx + vy
+                    let result = v[x] + v[y]
+                    if (result > 255) {
+                        v[0xf] = 1
+                    } else {
+                        v[0xf] = 0
+                    }
+                    v[x] = result & 0xFF
+                }
+                break;
+        }       
     }
 })
