@@ -239,6 +239,28 @@ timer.background(function() {
                         v[0xf] = 0
                     }
                     v[x] = result & 0xFF
+                } else if (n4 == 0x5) {
+                    // subtract
+                    // set vx to vx - vy
+                    let result = v[x] - v[y]
+                    if (result < 0) { // handle underflow
+                        v[x] = result & 0xFF
+                        v[0xf] = 0
+                    } else {
+                        v[x] = result
+                        v[0xf] = 1
+                    }
+                } else if (n4 == 0x6) {
+                    // subtract
+                    // set vx to vy - vx
+                    let result = v[y] - v[x]
+                    if (result < 0) { // handle underflow
+                        v[x] = result & 0xFF
+                        v[0xf] = 0
+                    } else {
+                        v[x] = result
+                        v[0xf] = 1
+                    }
                 }
                 break;
         }       
