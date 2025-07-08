@@ -189,68 +189,68 @@ timer.background(function() {
                 }
 
                 break;
-            case 0x2:
-                // subroutine
-                // add pc to stack then set pc to nnn
-                stack.push(pc);
-                pc = nnn;
-                break;
-            case 0x3:
-                // skip conditionally
-                // skip 1 instruction if vx == nn
-                if (v[x] == nn) {
-                    pc += 2;
-                }
-                break;
-            case 0x4:
-                // skip conditionally
-                // skip 1 instruction if vx != nn
-                if (v[x] != nn) {
-                    pc += 2;
-                }
-                break;
-            case 0x5:
-                // skip conditionally
-                // skip 1 instruction if vx == vy
-                if (v[x] == v[y]) {
-                    pc += 2;
-                }
-                break;
-            case 0x9:
-                // skip conditionally
-                // skip 1 instruction if vx != vy
-                if (v[x] != v[y]) {
-                    pc += 2;
-                }
-                break;
-            case 0x8:
-                if (n4 == 0x0) {
-                    // set vx to vy
-                    v[x] = v[y]
-                } else if (n4 == 0x1) {
-                    // binary or
-                    // set vx to the OR of vx and vy
-                    v[x] = v[x] | v[y]
-                } else if (n4 == 0x2) {
-                    // binary and
-                    // set vx to the AND of vx and vy
-                    v[x] = v[x] & v[y]
-                } else if (n4 == 0x3) {
-                    // binary xor
-                    // set vx to the XOR of vx and vy
-                    v[x] = v[x] ^ v[y]
-                } else if (n4 == 0x4) {
-                    // add
-                    // set vx to vx + vy
-                    let result = v[x] + v[y]
-                    if (result > 255) {
-                        v[0xf] = 1
-                    } else {
-                        v[0xf] = 0
-                    }
-                    v[x] = result & 0xFF
-                }
-                break;
+            // case 0x2:
+            //     // subroutine
+            //     // add pc to stack then set pc to nnn
+            //     stack.push(pc);
+            //     pc = nnn;
+            //     break;
+            // case 0x3:
+            //     // skip conditionally
+            //     // skip 1 instruction if vx == nn
+            //     if (v[x] == nn) {
+            //         pc += 2;
+            //     }
+            //     break;
+            // case 0x4:
+            //     // skip conditionally
+            //     // skip 1 instruction if vx != nn
+            //     if (v[x] != nn) {
+            //         pc += 2;
+            //     }
+            //     break;
+            // case 0x5:
+            //     // skip conditionally
+            //     // skip 1 instruction if vx == vy
+            //     if (v[x] == v[y]) {
+            //         pc += 2;
+            //     }
+            //     break;
+            // case 0x9:
+            //     // skip conditionally
+            //     // skip 1 instruction if vx != vy
+            //     if (v[x] != v[y]) {
+            //         pc += 2;
+            //     }
+            //     break;
+            // case 0x8:
+            //     if (n4 == 0x0) {
+            //         // set vx to vy
+            //         v[x] = v[y]
+            //     } else if (n4 == 0x1) {
+            //         // binary or
+            //         // set vx to the OR of vx and vy
+            //         v[x] = v[x] | v[y]
+            //     } else if (n4 == 0x2) {
+            //         // binary and
+            //         // set vx to the AND of vx and vy
+            //         v[x] = v[x] & v[y]
+            //     } else if (n4 == 0x3) {
+            //         // binary xor
+            //         // set vx to the XOR of vx and vy
+            //         v[x] = v[x] ^ v[y]
+            //     } else if (n4 == 0x4) {
+            //         // add
+            //         // set vx to vx + vy
+            //         let result = v[x] + v[y]
+            //         if (result > 255) {
+            //             v[0xf] = 1
+            //         } else {
+            //             v[0xf] = 0
+            //         }
+            //         v[x] = result & 0xFF
+            //     }
+            //     break;
         }       
     }
 })
