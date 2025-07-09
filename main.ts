@@ -148,19 +148,19 @@ let delayTimer = 0;
 let soundTimer = 0;
 
 // timer loop
-timer.background(function() {
-    while (true) {
-        // delay for 1/60 of a second 
-        pause(16.67)
-        console.log("hi")
-        if (delayTimer > 0) {
-            delayTimer -= 1;
-        }
-        if (soundTimer > 0) {
-            soundTimer -= 1;
-        }
-    }
-})
+// timer.background(function() {
+//     while (true) {
+//         // delay for 1/60 of a second 
+//         pause(16.67)
+//         console.log("hi")
+//         if (delayTimer > 0) {
+//             delayTimer -= 1;
+//         }
+//         if (soundTimer > 0) {
+//             soundTimer -= 1;
+//         }
+//     }
+// })
 
 // set the screen image to a blank image
 let screenImage = image.create(64, 32);
@@ -185,6 +185,16 @@ timer.background(function() {
         if (cycleCount == 1000) {
             pause(0)
             cycleCount = 0
+            let newTime = game.runtime()
+            if (newTime - lastTime > 16) {
+                lastTime = newTime
+                if (delayTimer > 0) {
+                    delayTimer -= 1
+                }
+                if (soundTimer > 0) {
+                    soundTimer -= 1
+                }
+            }
         }
         // if (game.runtime() - lastTime > 16) {
         //     lastTime = game.runtime()
